@@ -8,8 +8,6 @@ class Face(Base):
     __tablename__ = 'faces'
     id = Column(Integer, primary_key=True)
     name  = Column(String)
-    
-    # Store face encodings (JSON seralized)
     encoding = Column(Text)
 
 try:
