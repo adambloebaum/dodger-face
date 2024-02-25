@@ -11,7 +11,7 @@ def parse_filename(filename):
     Extracts the full name from the given filename.
 
     The filename is expected to have at least two parts separated by an underscore.
-    For example: 'John_Doe_123.mp4'
+    For example: 'John_Doe.mp4'
 
     Parameters:
     filename (str): The name of the file.
@@ -195,7 +195,7 @@ def intake_video(video_path, cnn_face_detector, shape_predictor, face_rec_model,
     flipped_faces = distort_faces(faces, rotate=False, add_noise=False, flip=True)
     augmented_faces = rotated_faces + noisy_faces + flipped_faces
     combined_faces = faces + augmented_faces
-    print(len(augmented_faces), "face generated")
+    print(len(augmented_faces), "faces generated")
     
     processed_faces = 0
     for face in combined_faces:
@@ -239,7 +239,7 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
     cap = cv2.VideoCapture(video_path)
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     frame_count = 0
-    progress_interval = total_frames * 0.05  # 5% of total frames
+    progress_interval = total_frames * 0.10  # 10% of total frames
 
     face_appearances = {}  # Dictionary to hold face appearance count and total confidence
 
