@@ -4,7 +4,7 @@ import glob
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import dlib
-from facetracking.functions import parse_filename, extract_frames, detect_faces, extract_face_encodings, store_face_encoding, intake_video, load_known_encodings, identify_faces_in_video
+from functions import parse_filename, extract_frames, detect_faces, extract_face_encodings, store_face_encoding, intake_video, load_known_encodings, identify_faces_in_video
 
 def load_config(config_path):
     with open(config_path, 'r') as file:

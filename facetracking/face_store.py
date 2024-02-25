@@ -7,8 +7,8 @@ import json
 import logging
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, exc
-from facetracking.initialize_database import Base, Face
-from facetracking.functions import parse_filename, extract_frames, detect_faces, extract_face_encodings, store_face_encoding, intake_video
+from initialize_database import Base, Face
+from functions import parse_filename, extract_frames, detect_faces, extract_face_encodings, store_face_encoding, intake_video
 
 def load_config(config_path):
     with open(config_path, 'r') as file:

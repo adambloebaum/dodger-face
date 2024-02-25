@@ -4,7 +4,7 @@ import json
 import dlib
 import numpy as np
 import pandas as pd
-from facetracking.initialize_database import Base, Face
+from initialize_database import Base, Face
 
 def parse_filename(filename):
     """
@@ -22,9 +22,9 @@ def parse_filename(filename):
     base = os.path.basename(filename)
     name, ext = os.path.splitext(base)
     parts = name.split('_')
-    if len(parts) < 3:
-        return None, None
-    first_name, last_name = parts[0], parts[1]
+    if len(parts) < 2:
+        return "No Name"
+    first_name, last_name = parts[0].capitalize(), parts[1].capitalize()
     full_name = f"{first_name} {last_name}"
     return full_name
 
