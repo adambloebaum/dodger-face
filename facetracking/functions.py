@@ -182,7 +182,7 @@ def intake_video(video_path, cnn_face_detector, shape_predictor, face_rec_model,
         print(f"Invalid filename format for {video_path}. Skipping.")
         return
 
-    print(f"Beginning video processing for {name}")
+    print(f"Beginning video processing for {name}...")
     
     frames = extract_frames(video_path)
     print(len(frames), "frames extracted")
@@ -204,7 +204,7 @@ def intake_video(video_path, cnn_face_detector, shape_predictor, face_rec_model,
             store_face_encoding(session, name, encoding)
             processed_faces += 1
     
-    print(f"Successfully uploaded {processed_faces} face encodings to the database for {name}.")
+    print(f"Successfully uploaded {processed_faces} face encodings to the database for {name}")
 
 def load_known_encodings(session):
     """
