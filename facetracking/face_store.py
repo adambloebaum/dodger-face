@@ -14,9 +14,9 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # Load in models and predictor
-cnn_face_detector = dlib.cnn_face_detection_model_v1(r'mmod_human_face_detector.dat')
-face_rec_model = dlib.face_recognition_model_v1(r'dlib_face_recognition_resnet_model_v1.dat')
-shape_predictor = dlib.shape_predictor(r'shape_predictor_68_face_landmarks.dat')
+face_rec_model = dlib.face_recognition_model_v1('facetracking/dlib_face_recognition_resnet_model_v1.dat')
+cnn_face_detector = dlib.cnn_face_detection_model_v1('facetracking/mmod_human_face_detector.dat')
+shape_predictor = dlib.shape_predictor('facetracking/shape_predictor_68_face_landmarks.dat')
 
 # Assumed filename format of LastName_FirstName_IDnum
 video_directory = r"face_scans"

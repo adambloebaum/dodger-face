@@ -11,9 +11,9 @@ engine = create_engine('sqlite:///face_encodings.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 
-face_rec_model = dlib.face_recognition_model_v1(r'C:\Users\adam.bloebaum\.vscode\driveline\cv\dlib_face_recognition_resnet_model_v1.dat')
-cnn_face_detector = dlib.cnn_face_detection_model_v1(r'C:\Users\adam.bloebaum\.vscode\driveline\cv\mmod_human_face_detector.dat')
-shape_predictor = dlib.shape_predictor(r"C:\Users\adam.bloebaum\.vscode\driveline\cv\shape_predictor_68_face_landmarks.dat")
+face_rec_model = dlib.face_recognition_model_v1('facetracking/dlib_face_recognition_resnet_model_v1.dat')
+cnn_face_detector = dlib.cnn_face_detection_model_v1('facetracking/mmod_human_face_detector.dat')
+shape_predictor = dlib.shape_predictor('facetracking/shape_predictor_68_face_landmarks.dat')
 
 def load_known_encodings(session):
     known_encodings = []
@@ -115,4 +115,4 @@ def identify_faces_in_video(video_path, known_encodings, known_names, known_ids)
 
 known_encodings, known_names, known_ids = load_known_encodings(session)
 
-identify_faces_in_video(r"C:\Users\adam.bloebaum\.vscode\driveline\cv\MoCap 91.0 mph Nov-02-2023.mp4", known_encodings, known_names, known_ids)
+identify_faces_in_video(".mp4", known_encodings, known_names, known_ids)
