@@ -1,0 +1,10 @@
+{
+    "database": {
+        "connection_string": "sqlite:///face_encodings_db.db"
+    },
+    "models": {
+        "face_recognition_model": "facetracking/dlib_face_recognition_resnet_model_v1.dat",
+        "cnn_face_detector": "facetracking/mmod_human_face_detector.dat",
+        "shape_predictor": "facetracking/shape_predictor_68_face_landmarks.dat"
+    }
+}
