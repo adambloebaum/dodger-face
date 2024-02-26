@@ -26,7 +26,7 @@ def main():
         shape_predictor = dlib.shape_predictor(config['models']['shape_predictor'])
 
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        video_dir = os.path.join(script_dir, 'encoding_videos')
+        video_dir = os.path.join(script_dir, 'trimmed_videos')
 
         # Iterate through each video file and process it
         for video_file in glob.glob(os.path.join(video_dir, '*.mp4')):
