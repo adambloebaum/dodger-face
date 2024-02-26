@@ -4,11 +4,7 @@ import glob
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import dlib
-from functions import load_known_encodings, identify_faces_in_video
-
-def load_config(config_path):
-    with open(config_path, 'r') as file:
-        return json.load(file)
+from functions import load_known_encodings, identify_faces_in_video, load_config
 
 def main():
     # Load configuration

@@ -5,11 +5,7 @@ import json
 import logging
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, exc
-from functions import intake_video
-
-def load_config(config_path):
-    with open(config_path, 'r') as file:
-        return json.load(file)
+from functions import intake_video, load_config
 
 def main():
     logging.basicConfig(level=logging.INFO)

@@ -6,6 +6,10 @@ import numpy as np
 import pandas as pd
 from initialize_database import Base, Face, Encoding
 
+def load_config(config_path):
+    with open(config_path, 'r') as file:
+        return json.load(file)
+
 def parse_filename(filename):
     """
     Extracts the full name from the given filename.
@@ -304,12 +308,13 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
                     confidence = 1 - distances[best_match_index]
                     print(f" - Best match: {known_names[best_match_index]} with confidence {confidence:.2f}")
 
-                    if confidence > 0.6:
+                    if confidence > 0.49:
                         name = known_names[best_match_index]
                         if name not in face_appearances:
                             face_appearances[name] = {'count': 0, 'total_confidence': 0}
                         face_appearances[name]['count'] += 1
                         face_appearances[name]['total_confidence'] += confidence
+                        print(f" - 1 match found for {name}")
                 else:
                     print(" - Face encoding failed")  # Debugging line
 
