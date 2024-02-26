@@ -1,5 +1,3 @@
-import cv2
-import numpy as np
 import os
 import glob
 import dlib
@@ -7,8 +5,7 @@ import json
 import logging
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, exc
-from initialize_database import Base, Face
-from functions import parse_filename, extract_frames, detect_faces, extract_face_encodings, store_face_encoding, intake_video
+from functions import intake_video
 
 def load_config(config_path):
     with open(config_path, 'r') as file:
@@ -33,7 +30,7 @@ def main():
         shape_predictor = dlib.shape_predictor(config['models']['shape_predictor'])
 
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        video_dir = os.path.join(script_dir, 'videos')
+        video_dir = os.path.join(script_dir, 'encoding_videos')
 
         # Iterate through each video file and process it
         for video_file in glob.glob(os.path.join(video_dir, '*.mp4')):

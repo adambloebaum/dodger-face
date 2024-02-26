@@ -4,7 +4,7 @@ import glob
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import dlib
-from functions import parse_filename, extract_frames, detect_faces, extract_face_encodings, store_face_encoding, intake_video, load_known_encodings, identify_faces_in_video
+from functions import load_known_encodings, identify_faces_in_video
 
 def load_config(config_path):
     with open(config_path, 'r') as file:
@@ -29,9 +29,11 @@ def main():
     # Load known encodings and names from the database
     known_encodings, known_names = load_known_encodings(session)
 
-    # Path to the folder containing videos
-    video_folder_path = 'path_to_your_video_folder'  # Update with the actual path
-    for video_file in glob.glob(os.path.join(video_folder_path, '*.mp4')):
+    # Construct the path to the 'test_videos' folder in one step
+    video_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'test_videos')
+
+    # Iterate through each MP4 file in the 'test_videos' folder
+    for video_file in glob.glob(os.path.join(video_dir, '*.mp4')):
         print(f"Processing video: {video_file}")
         summary = identify_faces_in_video(video_file, known_encodings, known_names, cnn_face_detector, shape_predictor, face_rec_model, session)
         print(f"Summary for {video_file}:", summary)
