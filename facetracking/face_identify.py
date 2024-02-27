@@ -33,6 +33,8 @@ def main():
         print(f"Processing video: {video_file}")
         summary = identify_faces_in_video(video_file, known_encodings, known_names, cnn_face_detector, shape_predictor, face_rec_model, session)
         print(f"Summary for {video_file}:", summary)
+        for name, info in summary.items():
+            print(f"  {name}: appeared for {info['appearance_time_percent']}% of the video with an average confidence of {info['average_confidence']}")
 
 if __name__ == "__main__":
     main()

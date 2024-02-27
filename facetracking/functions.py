@@ -255,10 +255,6 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
     """
     Identifies faces in a video file using known face encodings.
 
-    This function processes a given video, detects faces frame by frame (with skipping),
-    and identifies these faces by comparing them with a set of known encodings. It keeps track
-    of each identified face, counting appearances and calculating average confidence.
-
     Parameters:
     video_path (str): Path to the video file to be processed.
     known_encodings (list): A list of known face encodings for comparison.
@@ -271,13 +267,6 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
 
     Returns:
     dict: A dictionary summarizing the appearance count and average confidence for each identified face.
-    
-    The function first opens the video file and iterates through it, skipping a set number of frames
-    as specified. For each processed frame, it detects faces and then extracts their encodings.
-    These encodings are compared with a list of known encodings to find the best match. If a match
-    is found with a confidence higher than a threshold (0.6 in this case), the function records the
-    appearance of the face. Finally, it provides a summary of all faces identified in the video along
-    with their appearance counts and average confidence levels.
     """
     cap = cv2.VideoCapture(video_path)
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -286,6 +275,7 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
 
     face_appearances = {}  # Dictionary to hold face appearance count and total confidence
     known_encodings_np = np.array(known_encodings)
+    frames_with_faces = 0
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -293,9 +283,10 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
             break
 
         if frame_count % frame_skip == 0:
-            # Process frame
+            face_detected_in_frame = False
+
             detected_faces = detect_faces([frame], cnn_face_detector)
-            print(f"Frame {frame_count}: Detected {len(detected_faces)} faces")  # Debugging line
+            print(f"Frame {frame_count}: Detected {len(detected_faces)} faces")
 
             for face in detected_faces:
                 encoding_json = extract_face_encodings(face, shape_predictor, face_rec_model)
@@ -303,20 +294,21 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
                     encoding = np.array(json.loads(encoding_json))
                     distances = np.linalg.norm(encoding - known_encodings_np, axis=1)
 
-                    # Debugging: Print the best match and its distance
                     best_match_index = np.argmin(distances)
                     confidence = 1 - distances[best_match_index]
                     print(f" - Best match: {known_names[best_match_index]} with confidence {confidence:.2f}")
 
                     if confidence > 0.49:
+                        face_detected_in_frame = True
                         name = known_names[best_match_index]
                         if name not in face_appearances:
                             face_appearances[name] = {'count': 0, 'total_confidence': 0}
                         face_appearances[name]['count'] += 1
                         face_appearances[name]['total_confidence'] += confidence
                         print(f" - 1 match found for {name}")
-                else:
-                    print(" - Face encoding failed")  # Debugging line
+
+            if face_detected_in_frame:
+                frames_with_faces += 1
 
         frame_count += 1
         if frame_count % progress_interval < 1:
@@ -327,12 +319,8 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
     # Summarize results
     summary = {}
     for name, data in face_appearances.items():
-        appearance_time = data['count'] / total_frames * 100
-        avg_confidence = data['total_confidence'] / data['count']
+        appearance_time = int(data['count'] / frames_with_faces * 100)
+        avg_confidence = int(data['total_confidence'] / data['count'])
         summary[name] = {'appearance_time_percent': appearance_time, 'average_confidence': avg_confidence}
-
-    print("Summary of video analysis:")
-    for name, info in summary.items():
-        print(f"{name} appeared for {info['appearance_time_percent']:.2f}% of the video with an average confidence of {info['average_confidence']:.2f}")
 
     return summary
