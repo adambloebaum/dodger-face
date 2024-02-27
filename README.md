@@ -19,7 +19,7 @@ a facial recognition pipeline for storing facial encodings to a database and ide
 
 ### relationships
 
-- **Face to Encoding**: one-to-many relationship. each face can have multiple encodings. this relationship is represented in the `Face` class with the `encodings` attribute, which refers to the `Encoding` class. the `back_populates="face"` attribute in the `Encoding` class ensures bidirectional relationship.
+- **Face to Encoding**: one-to-many relationship. each face can have multiple encodings. this relationship is represented in the `Face` class with the `encodings` attribute, which refers to the `Encoding` class. the `back_populates="face"` attribute in the `Encoding` class ensures bidirectional relationship
 - **Encoding to Face**: many-to-one relationship. each encoding is linked to a single face. this relationship is represented in the `Encoding` class with the `face` attribute, which refers to the `Face` class. the `back_populates="encodings"` attribute in the `Face` class maintains the connection from the other side
 
 ### optimization
