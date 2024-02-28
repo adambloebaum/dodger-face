@@ -39,8 +39,8 @@ def main():
     print("NN completed")
 
     # Save models
-    joblib.dump(pca, 'facetracking/pca_model.joblib')
-    joblib.dump(nn_model, 'facetracking/nn_model.joblib')
+    joblib.dump(pca, 'pca_model.joblib')
+    joblib.dump(nn_model, 'nn_model.joblib')
 
     print("PCA and Nearest Neighbors models saved successfully.")
 

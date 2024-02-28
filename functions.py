@@ -209,7 +209,7 @@ def intake_video(video_path, cnn_face_detector, shape_predictor, face_rec_model,
     flipped_faces = distort_faces(faces, rotate=False, add_noise=False, flip=True)
     augmented_faces = rotated_faces + noisy_faces + flipped_faces
     combined_faces = faces + augmented_faces
-    print(len(augmented_faces), "faces generated")
+    print(len(augmented_faces), "faces generated from augmentation")
     
     processed_faces = 0
     for face in combined_faces:
@@ -249,8 +249,7 @@ def load_known_encodings(session):
 
     return known_encodings, known_names
 
-# frame skip currently set higher to 300 for test videos
-def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_detector, shape_predictor, face_rec_model, session, frame_skip=300):
+def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_detector, shape_predictor, face_rec_model, pca_model, nearest_neighbor_model, session, frame_skip=300):
     """
     Identifies faces in a video file using known face encodings.
 
@@ -270,10 +269,9 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
     cap = cv2.VideoCapture(video_path)
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     frame_count = 0
-    progress_interval = total_frames * 0.10  # 10% of total frames
+    progress_interval = total_frames * 0.10
 
-    face_appearances = {}  # Dictionary to hold face appearance count and total confidence
-    known_encodings_np = np.array(known_encodings)
+    face_appearances = {}
     frames_with_faces = 0
 
     while cap.isOpened():
@@ -285,26 +283,29 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
             face_detected_in_frame = False
 
             detected_faces = detect_faces([frame], cnn_face_detector)
-            print(f"Frame {frame_count}: Detected {len(detected_faces)} faces")
 
             for face in detected_faces:
                 encoding_json = extract_face_encodings(face, shape_predictor, face_rec_model)
                 if encoding_json is not None:
                     encoding = np.array(json.loads(encoding_json))
-                    distances = np.linalg.norm(encoding - known_encodings_np, axis=1)
+                    
+                    # Transform encoding with PCA
+                    encoding_pca = pca_model.transform([encoding])
+                    
+                    # Use Nearest Neighbor model to find the best match
+                    distances, indices = nearest_neighbor_model.kneighbors(encoding_pca)
+                    best_match_index = indices[0][0]
+                    distance = distances[0][0]
+                    name = known_names[best_match_index]
+                    
+                    if name not in face_appearances:
+                        face_appearances[name] = {'count': 0, 'total_confidence': 0}
+                    face_appearances[name]['count'] += 1
+                    face_detected_in_frame = True
 
-                    best_match_index = np.argmin(distances)
-                    confidence = 1 - distances[best_match_index]
-                    print(f" - Best match: {known_names[best_match_index]} with confidence {confidence:.2f}")
-
-                    if confidence > 0.49:
-                        face_detected_in_frame = True
-                        name = known_names[best_match_index]
-                        if name not in face_appearances:
-                            face_appearances[name] = {'count': 0, 'total_confidence': 0}
-                        face_appearances[name]['count'] += 1
-                        face_appearances[name]['total_confidence'] += confidence
-                        print(f" - 1 match found for {name}")
+                    # Confidence could be derived from distance if needed
+                    confidence = 1 / (1 + distance)
+                    face_appearances[name]['total_confidence'] += confidence
 
             if face_detected_in_frame:
                 frames_with_faces += 1
@@ -319,7 +320,7 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
     summary = {}
     for name, data in face_appearances.items():
         appearance_time = int(data['count'] / frames_with_faces * 100)
-        avg_confidence = int(data['total_confidence'] / data['count'])
+        avg_confidence = data['total_confidence'] / data['count'] if data['count'] > 0 else 0
         summary[name] = {'appearance_time_percent': appearance_time, 'average_confidence': avg_confidence}
 
     return summary
