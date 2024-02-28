@@ -141,6 +141,9 @@ def extract_face_encodings(face, shape_predictor, face_rec_model):
     Returns:
     str: A JSON string of the face encoding, or None if no face is detected.
     """
+    if face is None or face.size == 0:
+        return None
+    
     # Convert the OpenCV BGR image to RGB
     rgb_image = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
 
@@ -273,7 +276,7 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
 
     face_appearances = {}
     frames_with_faces = 0
-    unknown_threshold = 0.49
+    unknown_threshold = 0.6
 
     while cap.isOpened():
         ret, frame = cap.read()

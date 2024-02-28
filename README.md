@@ -48,8 +48,12 @@ freddie freeman: https://www.youtube.com/watch?v=ajqDo3zuJIo&ab_channel=BallySpo
 
 shohei ohtani: https://www.youtube.com/watch?v=9qUCo-K2OhQ&ab_channel=GQSports
 
-# short videos identified and summarized
+# test videos summarized
 
 clayton kershaw & walker buehler: https://www.youtube.com/watch?v=BiBvapeX7Zo&ab_channel=LosAngelesTimes
 shohei ohtani & harold reynolds: https://www.youtube.com/watch?v=2zPRReEUnUg&t=24s&ab_channel=MLB
 freddie freeman & mookie betts & reporter: https://www.youtube.com/watch?v=VzYpn7BV2ys&ab_channel=LosAngelesTimes
+
+# on-field videos summarized
+
+clayton kershaw: https://www.youtube.com/watch?v=A-V1Wii68qo&ab_channel=MLB
