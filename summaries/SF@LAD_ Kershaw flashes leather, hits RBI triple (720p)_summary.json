@@ -1,0 +1,22 @@
+{
+    "Shohei Ohtani": {
+        "appearance_time_percent": 66,
+        "average_confidence": 0.7002912014846054
+    },
+    "Walker Buehler": {
+        "appearance_time_percent": 200,
+        "average_confidence": 0.6847823944122753
+    },
+    "Mookie Betts": {
+        "appearance_time_percent": 44,
+        "average_confidence": 0.6844333034771383
+    },
+    "Clayton Kershaw": {
+        "appearance_time_percent": 38,
+        "average_confidence": 0.7087643226617146
+    },
+    "Freddie Freeman": {
+        "appearance_time_percent": 11,
+        "average_confidence": 0.6811453603795506
+    }
+}

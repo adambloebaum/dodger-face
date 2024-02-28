@@ -29,7 +29,7 @@ def main():
     known_encodings, known_names = load_known_encodings(session)
 
     # Construct the path to the 'test_videos' folder in one step
-    video_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'test_videos')
+    video_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'field_videos')
 
     # Get the directory of the current script
     script_dir = os.path.dirname(os.path.abspath(__file__))
