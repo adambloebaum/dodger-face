@@ -86,7 +86,7 @@ def detect_faces(frames, cnn_face_detector):
         faces = cnn_face_detector(rgb_image, 1)
 
         for face in faces:
-            print('Face detected!')
+            #print('Face detected!')
             x, y, w, h = face.rect.left(), face.rect.top(), face.rect.width(), face.rect.height()
             detected_faces.append(rgb_image[y:y+h, x:x+w])
 
