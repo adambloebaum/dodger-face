@@ -2,6 +2,8 @@ from sqlalchemy import create_engine, Column, Integer, String, Text, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.exc import SQLAlchemyError
 import logging
+import json
+import os
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -32,6 +34,29 @@ def initialize_database():
         logging.error("Error occurred during engine creation or table initialization: %s", e)
         raise
 
+# Function to load and update the configuration
+def load_and_update_config(config_path):
+    # Read the JSON configuration file
+    with open(config_path, 'r') as file:
+        config = json.load(file)
+
+    # Get the directory of the current script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Update the connection string
+    db_filename = 'face_encodings_db.db'
+    db_path = os.path.join(script_dir, db_filename)
+    config['database']['connection_string'] = f"sqlite:///{db_path}"
+
+    return config
+
 if __name__ == "__main__":
+    # Get the directory of the current script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Construct the path to config.json
+    config_file_path = os.path.join(script_dir, 'config.json')
+    # Load and update configuration from the JSON file
+    config = load_and_update_config(config_file_path)
+
     # Initialize the database when this script is run
     initialize_database()
