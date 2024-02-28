@@ -247,9 +247,9 @@ def load_known_encodings(session):
     except Exception as e:
         print(f"Error loading known encodings from database: {e}")
 
-    return known_encodings, known_names
+    return known_encodings, known_names 
 
-def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_detector, shape_predictor, face_rec_model, pca_model, nearest_neighbor_model, session, frame_skip=300):
+def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_detector, shape_predictor, face_rec_model, pca_model, nearest_neighbor_model, session, frame_skip=24):
     """
     Identifies faces in a video file using known face encodings.
 
@@ -273,6 +273,7 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
 
     face_appearances = {}
     frames_with_faces = 0
+    unknown_threshold = 0.49
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -296,14 +297,19 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
                     distances, indices = nearest_neighbor_model.kneighbors(encoding_pca)
                     best_match_index = indices[0][0]
                     distance = distances[0][0]
-                    name = known_names[best_match_index]
-                    
+
+                    # Check if the face is known or unknown
+                    if distance > unknown_threshold:
+                        name = 'Unknown Person'
+                    else:
+                        name = known_names[best_match_index]
+
                     if name not in face_appearances:
                         face_appearances[name] = {'count': 0, 'total_confidence': 0}
                     face_appearances[name]['count'] += 1
                     face_detected_in_frame = True
 
-                    # Confidence could be derived from distance if needed
+                    # Confidence derived from distance
                     confidence = 1 / (1 + distance)
                     face_appearances[name]['total_confidence'] += confidence
 
