@@ -1,8 +1,8 @@
 
-facetracking/__pycache__/functions.cpython-311.pyc
-facetracking/__pycache__/initialize_database.cpython-311.pyc
-facetracking/raw_videos/clayton_kershaw.mp4
-facetracking/raw_videos/freddie_freeman.mp4
-facetracking/raw_videos/mookie_betts.mp4
-facetracking/raw_videos/shohei_ohtani.mp4
-facetracking/raw_videos/walker_buehler.mp4
+__pycache__/functions.cpython-311.pyc
+__pycache__/initialize_database.cpython-311.pyc
+raw_videos/clayton_kershaw.mp4
+raw_videos/freddie_freeman.mp4
+raw_videos/mookie_betts.mp4
+raw_videos/shohei_ohtani.mp4
+raw_videos/walker_buehler.mp4
