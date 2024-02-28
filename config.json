@@ -1,10 +1,10 @@
 {
     "database": {
-        "connection_string": "sqlite:///face_encodings_db.db"
+        "connection_string": "sqlite:////root/dodger-face/face_encodings_db.db"
     },
     "models": {
-        "face_recognition_model": "dat/dlib_face_recognition_resnet_model_v1.dat",
-        "cnn_face_detector": "dat/mmod_human_face_detector.dat",
-        "shape_predictor": "dat/shape_predictor_68_face_landmarks.dat"
+        "face_recognition_model": "/root/dodger-face/dat/dlib_face_recognition_resnet_model_v1.dat",
+        "cnn_face_detector": "/root/dodger-face/dat/mmod_human_face_detector.dat",
+        "shape_predictor": "/root/dodger-face/dat/shape_predictor_68_face_landmarks.dat"
     }
 }

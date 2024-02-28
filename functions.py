@@ -40,8 +40,7 @@ def get_or_create_face(session, name):
         session.commit()
     return face.id
 
-# set really high currently without more computing power
-def extract_frames(video_path, frame_skip=250):
+def extract_frames(video_path, frame_skip=24):
     """
     Extracts frames from a video, skipping a specified number of frames.
 
