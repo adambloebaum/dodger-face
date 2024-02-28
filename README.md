@@ -50,6 +50,6 @@ shohei ohtani: https://www.youtube.com/watch?v=9qUCo-K2OhQ&ab_channel=GQSports
 
 # short videos identified and summarized
 
-mookie betts: https://www.youtube.com/watch?v=13_5FPCngS8&ab_channel=DodgerBlue
-
-freddie freeman: https://www.youtube.com/watch?v=8TIHcCcYXvI&ab_channel=DodgerBlue
+clayton kershaw & walker buehler: https://www.youtube.com/watch?v=BiBvapeX7Zo&ab_channel=LosAngelesTimes
+shohei ohtani & harold reynolds: https://www.youtube.com/watch?v=2zPRReEUnUg&t=24s&ab_channel=MLB
+freddie freeman & mookie betts & reporter: https://www.youtube.com/watch?v=VzYpn7BV2ys&ab_channel=LosAngelesTimes

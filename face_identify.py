@@ -34,7 +34,7 @@ def main():
     # Get the directory of the current script
     script_dir = os.path.dirname(os.path.abspath(__file__))
     # Define the directory where the untrained summaries will be saved
-    summary_dir = os.path.join(script_dir, 'untrained_summaries')
+    summary_dir = os.path.join(script_dir, 'summaries')
     # Create the summary directory if it doesn't exist
     if not os.path.exists(summary_dir):
         os.makedirs(summary_dir)
