@@ -276,7 +276,7 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
 
     face_appearances = {}
     frames_with_faces = 0
-    unknown_threshold = 0.2
+    unknown_threshold = 0.4
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -309,6 +309,7 @@ def identify_faces_in_video(video_path, known_encodings, known_names, cnn_face_d
 
                     if name not in face_appearances:
                         face_appearances[name] = {'count': 0, 'total_confidence': 0}
+
                     face_appearances[name]['count'] += 1
                     face_detected_in_frame = True
 

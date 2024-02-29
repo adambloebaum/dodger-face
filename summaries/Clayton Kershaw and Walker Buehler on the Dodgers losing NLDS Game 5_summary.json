@@ -4,7 +4,11 @@
         "average_confidence": 0.7815160653964119
     },
     "Walker Buehler": {
-        "appearance_time_percent": 79,
-        "average_confidence": 0.768892568685162
+        "appearance_time_percent": 77,
+        "average_confidence": 0.770554601223967
+    },
+    "Unknown Person": {
+        "appearance_time_percent": 2,
+        "average_confidence": 0.7049043159411674
     }
 }
