@@ -57,7 +57,7 @@ The project utilizes a relational database with a schema designed to effectively
 
 5. **Tracking Appearances**: The system tracks each appearance of a known individual, counting the occurrences and calculating the confidence score based on the distance metric from the Nearest Neighbor model.
 
-## Summarization output
+## Summary Output
 The summarization process involves the following steps:
 
 1. **Appearance Time Calculation**: For each identified individual, the system calculates the percentage of time they appear in the video based on their appearance count and total frames with faces.
