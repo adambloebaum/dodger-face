@@ -44,7 +44,27 @@ The project utilizes a relational database with a schema designed to effectively
 
 ### Relationships
 - **Face to Encoding**: This is a one-to-many relationship where each face can have multiple encodings. This relationship is represented in the `Face` class with the `encodings` attribute, which refers to the `Encoding` class. The `back_populates="face"` attribute in the `Encoding` class ensures a bidirectional relationship.
-- **Encoding to Face**: This represents a many-to-one relationship. Each encoding is linked to a single face. This relationship is defined in the `Encoding` class with the `face` attribute, referring to the `Face` class. The `back_populates="encodings"` attribute in the `Face` class maintains the connection from the other side【51†source】.
+- **Encoding to Face**: This represents a many-to-one relationship. Each encoding is linked to a single face. This relationship is defined in the `Encoding` class with the `face` attribute, referring to the `Face` class. The `back_populates="encodings"` attribute in the `Face` class maintains the connection from the other side.
+
+## Identification Process
+1. **Loading Known Encodings**: The system loads known face encodings and corresponding names from the database. This is done using a join query to associate each encoding with the correct name, deserializing the encoding from JSON format.
+
+2. **Video Processing**: For each video file, the system captures frames, skipping a specified number of frames to optimize processing.
+
+3. **Face Detection and Encoding**: Faces are detected in each frame using Dlib's CNN face detection model. These faces are then encoded using Dlib's face recognition model.
+
+4. **Identification and Matching**: The encoded faces are transformed using a PCA model to reduce dimensionality. The Nearest Neighbor model is then used to find the best match from the known encodings. A threshold is set to determine whether a face is known or unknown.
+
+5. **Tracking Appearances**: The system tracks each appearance of a known individual, counting the occurrences and calculating the confidence score based on the distance metric from the Nearest Neighbor model.
+
+## Summarization output
+The summarization process involves the following steps:
+
+1. **Appearance Time Calculation**: For each identified individual, the system calculates the percentage of time they appear in the video based on their appearance count and total frames with faces.
+
+2. **Average Confidence**: The average confidence score for each individual is calculated. This score is derived from the confidence scores obtained during the identification process.
+
+3. **Summary Generation**: The system generates a summary that includes the appearance time percentage and average confidence for each identified individual. This summary is provided in a dictionary format, which can then be serialized into JSON for reporting or further analysis.
 
 ## Configuration
 Configuration settings are located in `config.json`. This includes database connection and paths to facial recognition models.
