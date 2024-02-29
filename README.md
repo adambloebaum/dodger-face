@@ -55,5 +55,7 @@ Shohei Ohtani: https://www.youtube.com/watch?v=9qUCo-K2OhQ&ab_channel=GQSports
 ### Test videos summarized
 
 Clayton Kershaw & Walker Buehler & reporter: https://www.youtube.com/watch?v=BiBvapeX7Zo&ab_channel=LosAngelesTimes
+
 Shohei Ohtani & Harold Reynolds: https://www.youtube.com/watch?v=2zPRReEUnUg&t=24s&ab_channel=MLB
+
 Freddie Freeman & Mookie Betts & reporter: https://www.youtube.com/watch?v=VzYpn7BV2ys&ab_channel=LosAngelesTimes
