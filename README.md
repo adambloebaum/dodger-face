@@ -29,6 +29,23 @@ To set up, follow these steps:
 - Pandas
 - Numpy
 
+## Database Schema
+
+The project utilizes a relational database with a schema designed to effectively manage and retrieve facial data. The database schema is comprised of two main tables: `faces` and `encodings`. Here's a detailed overview:
+
+### `faces` Table
+- **`id`**: An integer that serves as the primary key. It represents a unique identifier for each individual person.
+- **`name`**: A string field that stores the name of the person. This is also unique for each entry.
+
+### `encodings` Table
+- **`id`**: An integer that serves as the primary key, representing a unique identifier for each facial encoding.
+- **`face_id`**: An integer foreign key that links to the `id` in the `faces` table. It signifies which person a particular encoding belongs to.
+- **`encoding`**: A text field that contains the facial feature encoding data.
+
+### Relationships
+- **Face to Encoding**: This is a one-to-many relationship where each face can have multiple encodings. This relationship is represented in the `Face` class with the `encodings` attribute, which refers to the `Encoding` class. The `back_populates="face"` attribute in the `Encoding` class ensures a bidirectional relationship.
+- **Encoding to Face**: This represents a many-to-one relationship. Each encoding is linked to a single face. This relationship is defined in the `Encoding` class with the `face` attribute, referring to the `Face` class. The `back_populates="encodings"` attribute in the `Face` class maintains the connection from the other side【51†source】.
+
 ## Configuration
 Configuration settings are located in `config.json`. This includes database connection and paths to facial recognition models.
 
