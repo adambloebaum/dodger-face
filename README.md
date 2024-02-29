@@ -1,59 +1,59 @@
-# putervis
+# dodgerface
+Facial recognition system for the LA Dodgers star players
 
-computer vision
+## Introduction
+Dodgerface is a facial recognition system designed to identify LA Dodgers stars from interviews and press conferences. Utilizing advanced computer vision and machine learning techniques, it processes video clips, stores facial encodings in a database, and accurately identifies individuals in new video clips. Stars Clayton Kershaw, Shohei Ohtani, Walker Buehler, Mookie Betts, and Freedie Freeman are used in this project.
 
-## facetracking
+## Installation
+To set up, follow these steps:
+1. Install required Python packages.
+2. Set up the SQLite database and local filepaths using `initialize_database.py`.
 
-a facial recognition pipeline for storing facial encodings to a database and identifying the face in a video. 3 minute clips from interviews/press conferences by LA dodgers stars Clayton Kershaw, Walker Beuhler, Mookie Betts, Freddie Freeman, and Shohei Ohtani are used to extract face encodings to the database, and similar videos are used to test the effectiveness of the facial recognition system
+## Usage
+1. **Database Setup**: Run `initialize_database.py` to set up the SQLite database and configuration filepaths
+2. **Video Trimming**: Use `video_trim.py` to trim raw videos and store them in `trimmed_videos`. *Raw videos have been omitted from the public repository due to filesize*.
+3. **Database Upload**: Process trimmed videos with `face_store.py` to upload face encoding data to the database.
+4. **Face Identification**: Run `face_identify.py` on videos in `test_videos` to identify faces. Summaries are saved in `summaries` in JSON format.
 
-### database schema
+## Features
+- Video trimming and standardization.
+- Facial encoding storage and retrieval from a database.
+- Face recognition in videos with statistical summaries.
 
-#### `faces`
-- `id` (integer): primary key, unique id for each person.
-- `name` (string): name of the person, unique.
+## Dependencies
+- Python 3.x
+- OpenCV
+- Dlib
+- SQLAlchemy
+- MoviePy
+- Pandas
+- Numpy
 
-#### `encodings`
-- `id` (integer): primary key, unique id for each encoding.
-- `face_id` (integer, foreignkey): foreign key linking to `id` in the `faces` table.
-- `encoding` (text): facial feature encoding data.
+## Configuration
+Configuration settings are located in `config.json`. This includes database connection and paths to facial recognition models.
 
-### relationships
+## Documentation
+Detailed documentation of functions is available in `functions.py`, including database operations, video processing, and face detection.
 
-- **Face to Encoding**: one-to-many relationship. each face can have multiple encodings. this relationship is represented in the `Face` class with the `encodings` attribute, which refers to the `Encoding` class. the `back_populates="face"` attribute in the `Encoding` class ensures bidirectional relationship
-- **Encoding to Face**: many-to-one relationship. each encoding is linked to a single face. this relationship is represented in the `Encoding` class with the `face` attribute, which refers to the `Face` class. the `back_populates="encodings"` attribute in the `Face` class maintains the connection from the other side
+## Examples
+Example JSON summaries from facial recognition can be found in the `summaries` directory.
 
-### optimization
+## Video Links
 
-principle component analysis (pca) is configured to maintain 95% of the data variance to enhance computational efficiency without significantly compromising the accuracy of face recognition. a nearest neighbor model is trained on the pca-transformed encodings for rapidly identifying the most similar facial encodings from the database, using the `ball_tree` algorithm. both models are persisted by using joblib for saving and quick loading
+### Raw videos trimmed and processed
 
-### face encoding upload
+Clayton Kershaw: https://www.youtube.com/watch?v=2kN57k_SveU&ab_channel=DodgersHighlights
 
+Walker Beuhler: https://www.youtube.com/watch?v=IWoNVyGEz6Q&ab_channel=DodgerBlue
 
-### video identification
+Mookie Betts: https://www.youtube.com/watch?v=7hDOAUQH2GA&ab_channel=TheDodgersBleedLosPodcast
 
+Freddie Freeman: https://www.youtube.com/watch?v=ajqDo3zuJIo&ab_channel=BallySportsSouth
 
+Shohei Ohtani: https://www.youtube.com/watch?v=9qUCo-K2OhQ&ab_channel=GQSports
 
+### Test videos summarized
 
-## video links
-
-# raw videos trimmed and processed to database
-
-clayton kershaw: https://www.youtube.com/watch?v=2kN57k_SveU&ab_channel=DodgersHighlights
-
-walker beuhler: https://www.youtube.com/watch?v=IWoNVyGEz6Q&ab_channel=DodgerBlue
-
-mookie betts: https://www.youtube.com/watch?v=7hDOAUQH2GA&ab_channel=TheDodgersBleedLosPodcast
-
-freddie freeman: https://www.youtube.com/watch?v=ajqDo3zuJIo&ab_channel=BallySportsSouth
-
-shohei ohtani: https://www.youtube.com/watch?v=9qUCo-K2OhQ&ab_channel=GQSports
-
-# test videos summarized
-
-clayton kershaw & walker buehler: https://www.youtube.com/watch?v=BiBvapeX7Zo&ab_channel=LosAngelesTimes
-shohei ohtani & harold reynolds: https://www.youtube.com/watch?v=2zPRReEUnUg&t=24s&ab_channel=MLB
-freddie freeman & mookie betts & reporter: https://www.youtube.com/watch?v=VzYpn7BV2ys&ab_channel=LosAngelesTimes
-
-# on-field videos summarized
-
-clayton kershaw: https://www.youtube.com/watch?v=A-V1Wii68qo&ab_channel=MLB
+Clayton Kershaw & Walker Buehler & reporter: https://www.youtube.com/watch?v=BiBvapeX7Zo&ab_channel=LosAngelesTimes
+Shohei Ohtani & Harold Reynolds: https://www.youtube.com/watch?v=2zPRReEUnUg&t=24s&ab_channel=MLB
+Freddie Freeman & Mookie Betts & reporter: https://www.youtube.com/watch?v=VzYpn7BV2ys&ab_channel=LosAngelesTimes
